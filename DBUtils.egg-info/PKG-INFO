@@ -1,0 +1,23 @@
+Metadata-Version: 1.1
+Name: DBUtils
+Version: 1.1
+Summary: Database connections for multi-threaded environments.
+Home-page: http://www.webwareforpython.org/DBUtils
+Author: Christoph Zwerschke
+Author-email: cito@online.de
+License: Open Software License
+Download-URL: http://www.webwareforpython.org/downloads/DBUtils/
+Description: DBUtils is a suite of tools providing solid, persistent and pooled connections
+        to a database that can be used in all kinds of multi-threaded environments
+        like Webware for Python or other web application servers. The suite supports
+        DB-API 2 compliant database interfaces and the classic PyGreSQL interface.
+        
+Platform: any
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Open Software License
+Classifier: Programming Language :: Python
+Classifier: Topic :: Database
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
