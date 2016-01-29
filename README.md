@@ -5,7 +5,7 @@ DButils for python3
 
     python setup.py install
   
-﻿DBUtils User's Guide
+# DBUtils User's Guide
 ++++++++++++++++++++
 
 :Version: 1.1
