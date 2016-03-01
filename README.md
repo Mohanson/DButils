@@ -1,7 +1,7 @@
 # DButils
 DButils for python3
 
-# Installition
+# Install
 
     python setup.py install
   
