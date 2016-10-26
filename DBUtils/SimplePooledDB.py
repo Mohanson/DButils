@@ -143,7 +143,7 @@ class PooledDB:
             # If there is no connection level safety, build
             # the pool using the synchronized queue class
             # that implements all the required locking semantics.
-            from Queue import Queue
+            from queue import Queue
             self._queue = Queue(maxconnections) # create the queue
             self.connection = self._unthreadsafe_get_connection
             self.addConnection = self._unthreadsafe_add_connection

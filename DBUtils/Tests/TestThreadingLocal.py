@@ -29,7 +29,7 @@ class TestThreadingLocal(unittest.TestCase):
 
     def test2_ThreadLocal(self):
         def f():
-            items = mydata.__dict__.items()
+            items = list(mydata.__dict__.items())
             items.sort()
             log.append(items)
             mydata.number = 11
@@ -60,7 +60,7 @@ class TestThreadingLocal(unittest.TestCase):
         del mydata.color
         self.assertEqual(mydata.squared(), 4)
         def f():
-            items = mydata.__dict__.items()
+            items = list(mydata.__dict__.items())
             items.sort()
             log.append(items)
             mydata.number = 7
@@ -72,7 +72,7 @@ class TestThreadingLocal(unittest.TestCase):
         self.assertEqual(log,
             [[('color', 'red'), ('initialized', 1)], 7])
         self.assertEqual(mydata.number, 2)
-        self.assert_(not hasattr(mydata, 'color'))
+        self.assertTrue(not hasattr(mydata, 'color'))
         class MyLocal(local):
             __slots__ = 'number'
         mydata = MyLocal()

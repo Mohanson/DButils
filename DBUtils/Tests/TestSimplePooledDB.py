@@ -53,7 +53,7 @@ from DBUtils import SimplePooledDB
 
 def versionString(version):
     """Create version string."""
-    ver = map(str, version)
+    ver = list(map(str, version))
     numbers, rest = ver[:ver[2] == '0' and 2 or 3], ver[3:]
     return '.'.join(numbers) + '-'.join(rest)
 
@@ -83,12 +83,12 @@ class TestSimplePooledDB(unittest.TestCase):
         for threadsafety in (1, 2, 3):
             dbpool = self.my_dbpool(threadsafety, 1)
             db = dbpool.connection()
-            self.assert_(hasattr(db, 'cursor'))
-            self.assert_(hasattr(db, 'open_cursors'))
+            self.assertTrue(hasattr(db, 'cursor'))
+            self.assertTrue(hasattr(db, 'open_cursors'))
             self.assertEqual(db.open_cursors, 0)
-            self.assert_(hasattr(db, 'database'))
+            self.assertTrue(hasattr(db, 'database'))
             self.assertEqual(db.database, 'SimplePooledDBTestDB')
-            self.assert_(hasattr(db, 'user'))
+            self.assertTrue(hasattr(db, 'user'))
             self.assertEqual(db.user, 'SimplePooledDBTestUser')
             db.cursor()
             self.assertEqual(db.open_cursors, 1)
@@ -101,11 +101,11 @@ class TestSimplePooledDB(unittest.TestCase):
             db.cursor()
             self.assertEqual(db.open_cursors, 1)
             db.close()
-            self.assert_(not hasattr(db, 'open_cursors'))
+            self.assertTrue(not hasattr(db, 'open_cursors'))
             db = dbpool.connection()
-            self.assert_(hasattr(db, 'database'))
+            self.assertTrue(hasattr(db, 'database'))
             self.assertEqual(db.database, 'SimplePooledDBTestDB')
-            self.assert_(hasattr(db, 'user'))
+            self.assertTrue(hasattr(db, 'user'))
             self.assertEqual(db.user, 'SimplePooledDBTestUser')
             self.assertEqual(db.open_cursors, 1)
             db.cursor()
@@ -126,7 +126,7 @@ class TestSimplePooledDB(unittest.TestCase):
             db1.close()
             db1 = dbpool.connection()
             self.assertNotEqual(db1, db2)
-            self.assert_(hasattr(db1, 'cursor'))
+            self.assertTrue(hasattr(db1, 'cursor'))
             for i in range(3):
                 db1.cursor()
             self.assertEqual(db1.open_cursors, 8)
@@ -135,7 +135,7 @@ class TestSimplePooledDB(unittest.TestCase):
 
     def test5_threadsafety_1(self):
         dbpool = self.my_dbpool(1, 2)
-        from Queue import Queue, Empty
+        from queue import Queue, Empty
         queue = Queue(3)
         def connection():
             queue.put(dbpool.connection())
@@ -168,7 +168,7 @@ class TestSimplePooledDB(unittest.TestCase):
             dbpool = self.my_dbpool(threadsafety, 2)
             db1 = dbpool.connection()
             db2 = dbpool.connection()
-            for i in xrange(100):
+            for i in range(100):
                 dbpool.connection().cursor()
             self.assertEqual(db1.open_cursors, 50)
             self.assertEqual(db2.open_cursors, 50)

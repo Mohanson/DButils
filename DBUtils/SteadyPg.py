@@ -121,7 +121,7 @@ class SteadyPgConnection:
         # proper initialization of the connection
         if maxusage is None:
             maxusage = 0
-        if not isinstance(maxusage, (int, long)):
+        if not isinstance(maxusage, int):
             raise TypeError("'maxusage' must be an integer value.")
         self._maxusage = maxusage
         self._setsession_sql = setsession

@@ -147,6 +147,7 @@ __date__ = "$Date: 2011-08-14 13:57:11 +0200 (So, 14. Aug 2011) $"
 from threading import Condition
 
 from DBUtils.SteadyDB import connect
+import collections
 
 
 class PooledDBError(Exception):
@@ -219,7 +220,7 @@ class PooledDB:
             threadsafety = creator.threadsafety
         except AttributeError:
             try:
-                if not callable(creator.connect):
+                if not isinstance(creator.connect, collections.Callable):
                     raise AttributeError
             except AttributeError:
                 threadsafety = 2

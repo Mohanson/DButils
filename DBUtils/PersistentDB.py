@@ -121,8 +121,9 @@ __revision__ = "$Rev: 8218 $"
 __date__ = "$Date: 2011-08-14 13:57:11 +0200 (So, 14. Aug 2011) $"
 
 
-import ThreadingLocal
+from . import ThreadingLocal
 from DBUtils.SteadyDB import connect
+import collections
 
 
 class PersistentDBError(Exception):
@@ -174,7 +175,7 @@ class PersistentDB:
             threadsafety = creator.threadsafety
         except AttributeError:
             try:
-                if not callable(creator.connect):
+                if not isinstance(creator.connect, collections.Callable):
                     raise AttributeError
             except AttributeError:
                 threadsafety = 1

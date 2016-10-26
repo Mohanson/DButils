@@ -96,6 +96,7 @@ __date__ = "$Date: 2011-08-14 13:57:11 +0200 (So, 14. Aug 2011) $"
 
 
 import sys
+import collections
 
 
 class SteadyDBError(Exception):
@@ -168,11 +169,11 @@ class SteadyDBConnection:
                 self._threadsafety = self._dbapi.threadsafety
             except AttributeError:
                 self._threadsafety = None
-        if not callable(self._creator):
+        if not isinstance(self._creator, collections.Callable):
             raise TypeError("%r is not a connection provider." % (creator,))
         if maxusage is None:
             maxusage = 0
-        if not isinstance(maxusage, (int, long)):
+        if not isinstance(maxusage, int):
             raise TypeError("'maxusage' must be an integer value.")
         self._maxusage = maxusage
         self._setsession_sql = setsession
@@ -201,7 +202,7 @@ class SteadyDBConnection:
                 while mod:
                     try:
                         self._dbapi = sys.modules[mod]
-                        if not callable(self._dbapi.connect):
+                        if not isinstance(self._dbapi.connect, collections.Callable):
                             raise AttributeError
                     except (AttributeError, KeyError):
                         pass
@@ -220,7 +221,7 @@ class SteadyDBConnection:
                     while mod:
                         try:
                             self._dbapi = sys.modules[mod]
-                            if not callable(self._dbapi.connect):
+                            if not isinstance(self._dbapi.connect, collections.Callable):
                                 raise AttributeError
                         except (AttributeError, KeyError):
                             pass
@@ -514,7 +515,7 @@ class SteadyDBCursor:
             cursor = self._cursor
         if self._inputsizes:
             cursor.setinputsizes(self._inputsizes)
-        for column, size in self._outputsizes.iteritems():
+        for column, size in self._outputsizes.items():
             if column is None:
                 cursor.setoutputsize(size)
             else:

@@ -46,10 +46,10 @@ class DBUtilsExample(ExamplePage):
     dbapi_name = config.pop('dbapi', 'pg')
     if dbapi_name == 'pg': # use the PyGreSQL classic DB API
         dbmod_name += 'Pg'
-        if config.has_key('database'):
+        if 'database' in config:
             config['dbname'] = config['database']
             del config['database']
-        if config.has_key('password'):
+        if 'password' in config:
             config['passwd'] = config['password']
             del config['password']
     else: # use a DB-API 2 compliant module
@@ -231,11 +231,11 @@ class DBUtilsExample(ExamplePage):
             places = {}
             for i in id:
                 i = i[:4].rstrip()
-                if places.has_key(i):
+                if i in places:
                     places[i] += 1
                 else:
                     places[i] = 1
-            for i, n in places.items():
+            for i, n in list(places.items()):
                 cmds.append("update seminars set places_left=places_left+%d "
                 "where id=%s" % (n, self.sqlEncode(i)))
             db = self.dedicated_connection()
