@@ -262,7 +262,7 @@ class SteadyDBConnection:
             else:
                 self._failure = self._failures
             self._setsession(con)
-        except Exception, error:
+        except Exception as error:
             # the database module could not be determined
             # or the session could not be prepared
             try: # close the connection first
@@ -440,7 +440,7 @@ class SteadyDBConnection:
                     # the connection was used too often
                     raise self._failure
             cursor = self._con.cursor(*args, **kwargs) # try to get a cursor
-        except self._failures, error: # error in getting cursor
+        except self._failures as error: # error in getting cursor
             try: # try to reopen the connection
                 con = self._create()
             except Exception:
@@ -552,7 +552,7 @@ class SteadyDBCursor:
                 result = method(*args, **kwargs) # try to execute
                 if execute:
                     self._clearsizes()
-            except con._failures, error: # execution error
+            except con._failures as error: # execution error
                 if not transaction:
                     try:
                         cursor2 = con._cursor(
@@ -604,7 +604,7 @@ class SteadyDBCursor:
                                 self._clearsizes()
                         except error.__class__: # same execution error
                             use2 = False
-                        except Exception, error: # other execution errors
+                        except Exception as error: # other execution errors
                             use2 = True
                         else:
                             use2 = True
